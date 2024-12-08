@@ -9,7 +9,32 @@ export class InventoryPage extends BaseSwagLabPage {
 
     addItemToCartButton = this.page.locator('[id^="add-to-cart"]');
 
+    sortProductButton = this.page.getByTestId('product-sort-container');
+
+    inventoryItemsPrice = this.page.getByTestId('inventory-item-price');
+
     async addItemToCartById(id) {
         await this.addItemToCartButton.nth(id).click();
+    }
+
+    async sortProductNameAZ() {
+        await this.sortProductButton.selectOption('az');
+    }
+
+    async sortProductNameZA() {
+        await this.sortProductButton.selectOption('za');
+    }
+
+    async sortPriceLowToHigh() {
+        await this.sortProductButton.selectOption({ value: 'lohi' });
+    }
+
+    async sortPriceHighToLow() {
+        await this.sortProductButton.selectOption({ value: 'hilo' });
+    }
+
+    async getPrices() {
+        return this.page.$$eval('.inventory_item_price', (priceElements) => 
+            priceElements.map(el => parseFloat(el.textContent.replace('$', ''))));
     }
 }

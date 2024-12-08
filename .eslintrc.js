@@ -13,6 +13,12 @@ module.exports = {
         'import',
     ],
     overrides: [
+        {
+            files: ['*.test.ts', '*.spec.ts'],
+            rules: {
+                'import/no-extraneous-dependencies': 'off',
+            },
+        },
     ],
     parserOptions: {
         ecmaVersion: 'latest',
@@ -34,5 +40,8 @@ module.exports = {
             ignoreTemplateLiterals: true,
             ignoreRegExpLiterals: true,
         }],
+        'linebreak-style': 0,
+        'import/prefer-default-export': 'off',
+        'max-classes-per-file': 'off',
     },
 };
