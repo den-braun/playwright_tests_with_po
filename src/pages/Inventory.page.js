@@ -17,20 +17,8 @@ export class InventoryPage extends BaseSwagLabPage {
         await this.addItemToCartButton.nth(id).click();
     }
 
-    async sortProductNameAZ() {
-        await this.sortProductButton.selectOption('az');
-    }
-
-    async sortProductNameZA() {
-        await this.sortProductButton.selectOption('za');
-    }
-
-    async sortPriceLowToHigh() {
-        await this.sortProductButton.selectOption({ value: 'lohi' });
-    }
-
-    async sortPriceHighToLow() {
-        await this.sortProductButton.selectOption({ value: 'hilo' });
+    async performProductSort(sortOption) {
+        await this.sortProductButton.selectOption({ value: sortOption });
     }
 
     async getPrices() {

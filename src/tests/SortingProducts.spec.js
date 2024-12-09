@@ -14,7 +14,7 @@ test.beforeEach(async ({ app }) => {
 test.describe('Saucedemo tests for sorting products on invertory page', () => {
     test('Sorting products by name A-Z', async ({ app }) => {
         const productNamesBeforeSort = await app.inventory.inventoryItems.allTextContents();
-        await app.inventory.sortProductNameAZ();
+        await app.inventory.performProductSort('az');
 
         const productNamesAfterSortAZ = await app.inventory.inventoryItems.allTextContents();
         const sortedNamesAZ = [...productNamesBeforeSort].sort();
@@ -23,7 +23,7 @@ test.describe('Saucedemo tests for sorting products on invertory page', () => {
 
     test('Sorting products by name Z-A', async ({ app }) => {
         const productNamesBeforeSort = await app.inventory.inventoryItems.allTextContents();
-        await app.inventory.sortProductNameZA();
+        await app.inventory.performProductSort('za');
 
         const productNamesAfterSortZA = await app.inventory.inventoryItems.allTextContents();
         const sortedNamesZA = [...productNamesBeforeSort].sort().reverse();
@@ -32,7 +32,7 @@ test.describe('Saucedemo tests for sorting products on invertory page', () => {
 
     test('Sorting products by price Low to High', async ({ app }) => {
         const pricesBeforeSort = await app.inventory.getPrices();
-        await app.inventory.sortPriceLowToHigh();
+        await app.inventory.performProductSort('lohi');
 
         const pricesAfterSort = await app.inventory.getPrices();
         const sortedPrices = [...pricesBeforeSort].sort((a, b) => a - b);
@@ -41,7 +41,7 @@ test.describe('Saucedemo tests for sorting products on invertory page', () => {
 
     test('Sorting products by price High to Low', async ({ app }) => {
         const pricesBeforeSort = await app.inventory.getPrices();
-        await app.inventory.sortPriceHighToLow();
+        await app.inventory.performProductSort('hilo');
 
         const pricesAfterSort = await app.inventory.getPrices();
         const sortedPrices = [...pricesBeforeSort].sort((a, b) => b - a);
