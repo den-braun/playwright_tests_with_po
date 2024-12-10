@@ -26,3 +26,10 @@ export class InventoryPage extends BaseSwagLabPage {
             priceElements.map(el => parseFloat(el.textContent.replace('$', ''))));
     }
 }
+
+export const sortingOptions = {
+    AZ: 'az',
+    ZA: 'za',
+    LOW_TO_HIGH: 'lohi',
+    HIGH_TO_LOW: 'hilo'
+};

@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/base';
+import { sortingOptions } from '../pages/Inventory.page';
 
 test.beforeEach(async ({ app }) => {
     await app.login.navigate();
@@ -14,7 +15,7 @@ test.beforeEach(async ({ app }) => {
 test.describe('Saucedemo tests for sorting products on invertory page', () => {
     test('Sorting products by name A-Z', async ({ app }) => {
         const productNamesBeforeSort = await app.inventory.inventoryItems.allTextContents();
-        await app.inventory.performProductSort('az');
+        await app.inventory.performProductSort(sortingOptions.AZ);
 
         const productNamesAfterSortAZ = await app.inventory.inventoryItems.allTextContents();
         const sortedNamesAZ = [...productNamesBeforeSort].sort();
@@ -23,7 +24,7 @@ test.describe('Saucedemo tests for sorting products on invertory page', () => {
 
     test('Sorting products by name Z-A', async ({ app }) => {
         const productNamesBeforeSort = await app.inventory.inventoryItems.allTextContents();
-        await app.inventory.performProductSort('za');
+        await app.inventory.performProductSort(sortingOptions.ZA);
 
         const productNamesAfterSortZA = await app.inventory.inventoryItems.allTextContents();
         const sortedNamesZA = [...productNamesBeforeSort].sort().reverse();
@@ -32,7 +33,7 @@ test.describe('Saucedemo tests for sorting products on invertory page', () => {
 
     test('Sorting products by price Low to High', async ({ app }) => {
         const pricesBeforeSort = await app.inventory.getPrices();
-        await app.inventory.performProductSort('lohi');
+        await app.inventory.performProductSort((sortingOptions.LOW_TO_HIGH));
 
         const pricesAfterSort = await app.inventory.getPrices();
         const sortedPrices = [...pricesBeforeSort].sort((a, b) => a - b);
@@ -41,7 +42,7 @@ test.describe('Saucedemo tests for sorting products on invertory page', () => {
 
     test('Sorting products by price High to Low', async ({ app }) => {
         const pricesBeforeSort = await app.inventory.getPrices();
-        await app.inventory.performProductSort('hilo');
+        await app.inventory.performProductSort(sortingOptions.HIGH_TO_LOW);
 
         const pricesAfterSort = await app.inventory.getPrices();
         const sortedPrices = [...pricesBeforeSort].sort((a, b) => b - a);
