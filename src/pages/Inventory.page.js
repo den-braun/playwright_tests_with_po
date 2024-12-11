@@ -25,11 +25,31 @@ export class InventoryPage extends BaseSwagLabPage {
         return this.page.$$eval('.inventory_item_price', (priceElements) => 
             priceElements.map(el => parseFloat(el.textContent.replace('$', ''))));
     }
+
+    async addRandomItemsToTheCart(count) {
+        const totalItems = await this.inventoryItems.count();
+        const randomIndices = Array.from(new Set());
+
+        while (randomIndices.size < count) {
+            const randomIndex = Math.floor(Math.random() * totalItems);
+            randomIndices.add(randomIndex);
+        }
+
+        const addedItems = [];
+        for (const index of randomIndices) {
+            const productName = await this.inventoryItems.nth(index).locator('.inventory_item_name').innerText();
+            const productPrice = await this.inventoryItems.nth(index).locator('.inventory_item_price').innerText();
+            addedItems.push({ name: productName, price: productPrice });
+            await this.addItemToCartButton.nth(index).click();
+        }
+        return addedItems;
+    }
+
 }
 
 export const sortingOptions = {
     AZ: 'az',
     ZA: 'za',
     LOW_TO_HIGH: 'lohi',
-    HIGH_TO_LOW: 'hilo'
+    HIGH_TO_LOW: 'hilo',
 };

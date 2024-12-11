@@ -24,4 +24,17 @@ export class ShoppingCartPage extends BaseSwagLabPage {
     async removeCartItemById(id) {
         await this.cartItems.nth(id).locator(this.removeItemSelector).click();
     }
+
+    async getCartItemInfo() {
+        const cartItemCount = await this.cartItems.count();
+        const cartItems = [];
+
+        for (let i = 0; i < cartItemCount; i++) {
+            const name = await this.cartItems.nth(i).locator('.inventory_item_name').innerText();
+            const price = await this.cartItems.nth(i).locator('.inventory_item_price').innerText();
+            cartItems.push({ name, price });
+        }
+
+        return cartItems;
+    }
 }
